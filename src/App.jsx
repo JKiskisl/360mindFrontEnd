@@ -11,11 +11,12 @@ import Pricing from "./components/pricing/Pricing";
 import Whyus from "./components/whyus/Whyus";
 import Login from "./components/login/Login";
 import Signup from "./components/signup/Signup";
+import "./index.css";
 
 const App = () => {
   return (
     <Router>
-      <>
+      <div className="app-container">
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -23,7 +24,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
         </Routes>
         <Footer />
-      </>
+      </div>
     </Router>
   );
 };

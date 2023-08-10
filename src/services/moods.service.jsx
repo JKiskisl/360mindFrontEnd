@@ -19,11 +19,10 @@ export const getMoods = async (accessToken) => {
     return { data: null, error };
   }
 
-  if (!Array.isArray(data)) {
+  if (!data || !Array.isArray(data.data)) {
     return { data: null, error: "Data is not an array" };
   }
-
-  const moods = data.map((mood) => ({
+  const moods = data.data.map((mood) => ({
     id: mood.id,
     title: mood.title,
     content: mood.content,

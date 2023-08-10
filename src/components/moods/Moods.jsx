@@ -15,12 +15,15 @@ const Moods = () => {
         const accessToken = await getTokenFromLocalStorage();
         const response = await getMoods(accessToken);
 
+        console.log(response.data);
+
         if (!isMounted) {
           return;
         }
 
         if (response.error === null) {
           setMoods(response.data);
+          console.log(response.data);
           setErrorMessage("");
         } else {
           setErrorMessage(response.message);
@@ -41,11 +44,11 @@ const Moods = () => {
     <div className="moods">
       <h2>Moods</h2>
       {moods.map((mood) => (
-        <div key={mood.id} className="book">
+        <div key={mood.id} className="mood">
           <div className="mood__id">{mood.id}</div>
           <div className="mood__title">{mood.title}</div>
           <div className="mood__content">{mood.content}</div>
-          <div className="mood__email">{mood.email.fullname}</div>
+          <div className="mood__email">{mood.email?.fullname ?? "N/A"}</div>
         </div>
       ))}
     </div>

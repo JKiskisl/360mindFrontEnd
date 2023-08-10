@@ -2,10 +2,29 @@
 import React from "react";
 import "./nav.css";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { isAuthenticated, logoutUser } from "../../services/auth.service";
 
 const Nav = () => {
   const [activeButton, setActiveButton] = useState("home");
+  const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("isLoggedIn:", isLoggedIn);
+    console.log("isAuthenticated():", isAuthenticated());
+    setIsLoggedIn(isAuthenticated());
+  }, [location]);
+
+  const handleLogout = async () => {
+    const loggedOut = await logoutUser();
+    if (loggedOut) {
+      setIsLoggedIn(false);
+      console.log("user logged out successfully");
+    } else {
+      console.log("Logout failed");
+    }
+  };
 
   useEffect(() => {
     const sections = document.querySelectorAll("section");
@@ -68,12 +87,22 @@ const Nav = () => {
       </ul>
 
       <ul className="ul-right">
-        <li className={activeButton === "login" ? "active" : ""}>
-          <Link to="/login">Login</Link>
-        </li>
-        <li className={activeButton === "signup" ? "active" : ""}>
-          <Link to="/signup">Signup</Link>
-        </li>
+        {isLoggedIn ? (
+          <li>
+            <a href="#" onClick={handleLogout}>
+              Log out
+            </a>
+          </li>
+        ) : (
+          <>
+            <li className={location.pathname === "/login" ? "active" : ""}>
+              <Link to="/login">Login</Link>
+            </li>
+            <li className={location.pathname === "/signup" ? "active" : ""}>
+              <Link to="/signup">Signup</Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

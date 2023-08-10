@@ -1,16 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/auth.service";
 import "./login.css";
+import { isAuthenticated } from "../../services/auth.service";
 
 const Login = () => {
-  const handleLogin = (e) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    // For a basic example, you can just log the email and password for now
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    // Call the loginUser function from auth.service.jsx
+    const { data, error } = await loginUser(email, password);
+
+    if (error) {
+      // Handle login error here
+      setError(error); // Set the error state with the error message
+    } else {
+      if (data) {
+        localStorage.setItem("access_token: ", data);
+        console.log("Login successful. Token: ", isAuthenticated());
+        navigate("/");
+      }
+    }
   };
 
   return (
@@ -26,6 +41,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+      {error && <p className="error-message">{error}</p>}
       <p>
         Don't have an account? <Link to="/signup">Sign up</Link>
       </p>

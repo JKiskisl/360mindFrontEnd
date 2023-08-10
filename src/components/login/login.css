@@ -1,12 +1,10 @@
 .login-container {
-  flex: 1; /* This will make the login container take all available space in the flex container */
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
-/* Rest of the CSS remains the same */
 
 form {
   display: flex;

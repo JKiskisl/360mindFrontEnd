@@ -16,7 +16,7 @@ const Signup = () => {
 
     const { data, error } = await signupUser(fullname, email, password);
 
-    console.log("Signup Response:", data); // Log the response object
+    console.log("Signup Response:", data);
 
     if (error) {
       setError(error);

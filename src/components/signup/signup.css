@@ -7,8 +7,6 @@
   align-items: center;
 }
 
-/* Rest of the CSS remains the same */
-
 form {
   display: flex;
   flex-direction: column;

@@ -5,7 +5,7 @@ import "./login.css";
 import { isAuthenticated } from "../../services/auth.service";
 
 const Login = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
@@ -13,12 +13,10 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    // Call the loginUser function from auth.service.jsx
     const { data, error } = await loginUser(email, password);
 
     if (error) {
-      // Handle login error here
-      setError(error); // Set the error state with the error message
+      setError(error);
     } else {
       if (data) {
         localStorage.setItem("access_token: ", data);

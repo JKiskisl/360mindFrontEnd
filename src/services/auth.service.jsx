@@ -42,7 +42,6 @@ export const signupUser = async (fullname, email, password) => {
 
     const { data } = response;
 
-    // Assuming your backend returns the JWT token in the 'data' field upon successful signup
     const { access_token } = data;
     localStorage.setItem("access_token: ", access_token);
     return {
@@ -50,7 +49,6 @@ export const signupUser = async (fullname, email, password) => {
       error: null,
     };
   } catch (error) {
-    // Handle error
     return {
       data: null,
       error: error.response?.data?.message || "Signup failed.",

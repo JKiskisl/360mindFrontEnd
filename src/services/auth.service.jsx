@@ -56,7 +56,7 @@ export const signupUser = async (fullname, email, password) => {
   }
 };
 
-const getTokenFromLocalStorage = () => {
+export const getTokenFromLocalStorage = () => {
   return localStorage.getItem("access_token: ");
 };
 

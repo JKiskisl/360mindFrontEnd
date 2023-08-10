@@ -1,0 +1,42 @@
+/* moods.css */
+.moods-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mood-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mood-item {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+}
+
+.mood-item:hover {
+  background-color: #e0e0e0;
+}
+
+.selected {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.selected:hover {
+  background-color: var(--color-primary);
+}
+
+.mood-heading {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
+}

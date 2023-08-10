@@ -2,13 +2,15 @@
 import React from "react";
 import "./nav.css";
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { isAuthenticated, logoutUser } from "../../services/auth.service";
 
 const Nav = () => {
   const [activeButton, setActiveButton] = useState("home");
   const [isLoggedIn, setIsLoggedIn] = useState(isAuthenticated());
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("isLoggedIn:", isLoggedIn);
@@ -21,6 +23,7 @@ const Nav = () => {
     if (loggedOut) {
       setIsLoggedIn(false);
       console.log("user logged out successfully");
+      navigate("/");
     } else {
       console.log("Logout failed");
     }
@@ -42,7 +45,6 @@ const Nav = () => {
       setActiveButton(currentActiveButton);
     };
 
-    // Add 'DOMContentLoaded' listener to ensure all sections are available
     window.addEventListener("DOMContentLoaded", handleScroll);
     window.addEventListener("scroll", handleScroll);
 
@@ -88,11 +90,16 @@ const Nav = () => {
 
       <ul className="ul-right">
         {isLoggedIn ? (
-          <li>
-            <a href="#" onClick={handleLogout}>
-              Log out
-            </a>
-          </li>
+          <>
+            <li>
+              <Link to="/moods">My moods</Link>
+            </li>
+            <li>
+              <a href="#" onClick={handleLogout}>
+                Log out
+              </a>
+            </li>
+          </>
         ) : (
           <>
             <li className={location.pathname === "/login" ? "active" : ""}>

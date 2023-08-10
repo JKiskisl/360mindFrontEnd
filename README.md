@@ -19,4 +19,7 @@ Moods page ->
 
 ADD moods.service.jsx
 
-FIX getMOODS -----> 403 forbidden error.
+FIX getMOODS
+200OK
+
+CHECK refreshToken in the backend

@@ -1,17 +1,36 @@
-import axios from "axios";
-
+import { callExternalApi } from "./callexternalapi";
 const apiServerUrl = "http://localhost:8081";
 
+//get MOODS
+
 export const getMoods = async (accessToken) => {
-  try {
-    const response = await axios.get(`${apiServerUrl}/posts`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching mooods:", error);
-    throw error;
+  const config = {
+    url: `${apiServerUrl}/posts`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = await callExternalApi({ config });
+
+  if (error) {
+    return { data: null, error };
   }
+
+  if (!Array.isArray(data)) {
+    return { data: null, error: "Data is not an array" };
+  }
+
+  const moods = data.map((mood) => ({
+    id: mood.id,
+    title: mood.title,
+    content: mood.content,
+  }));
+
+  return {
+    data: moods,
+    error,
+  };
 };

@@ -32,9 +32,10 @@ export const loginUser = async (email, password) => {
   }
 };
 
-export const signupUser = async (email, password) => {
+export const signupUser = async (fullname, email, password) => {
   try {
     const response = await axios.post(`${apiServerUrl}/user/signup`, {
+      fullname,
       email,
       password,
     });
@@ -42,10 +43,10 @@ export const signupUser = async (email, password) => {
     const { data } = response;
 
     // Assuming your backend returns the JWT token in the 'data' field upon successful signup
-    const { token } = data;
-    localStorage.setItem("access_token: ", token);
+    const { access_token } = data;
+    localStorage.setItem("access_token: ", access_token);
     return {
-      data: token,
+      data: access_token,
       error: null,
     };
   } catch (error) {

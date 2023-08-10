@@ -14,7 +14,7 @@ const Nav = () => {
     console.log("isLoggedIn:", isLoggedIn);
     console.log("isAuthenticated():", isAuthenticated());
     setIsLoggedIn(isAuthenticated());
-  }, [location]);
+  }, [location, isLoggedIn]);
 
   const handleLogout = async () => {
     const loggedOut = await logoutUser();

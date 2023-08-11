@@ -1,21 +1,30 @@
 /* moods.css */
 
 .moods {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
   margin: 20px;
 }
 
 h2 {
   font-size: 1.5rem;
-  margin-bottom: 10px;
+  margin-bottom: 60px;
+  margin-top: 25px;
 }
 
 .mood {
-  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-primary);
   padding: 10px;
-  margin: 10px 0;
-  background-color: #f9f9f9;
+  align-items: center;
+  margin: 10px 800px 15px 0;
+  background-color: var(--color-bg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  width: 100%; /* Adjust the width as needed */
+  max-width: 400px; /* Set a maximum width for responsiveness */
 }
 
 .mood__id {
@@ -26,16 +35,16 @@ h2 {
 .mood__title {
   font-size: 1.1rem;
   margin-top: 5px;
-  color: #333;
+  color: var(--color-primary);
 }
 
 .mood__content {
   margin-top: 5px;
-  color: #555;
+  color: var(--color-white);
 }
 
 .mood__email {
   margin-top: 5px;
   font-style: italic;
-  color: #666;
+  color: var(--color-white);
 }

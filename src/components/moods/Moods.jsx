@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./moods.css";
 import { getMoods } from "../../services/moods.service";
 import { getTokenFromLocalStorage } from "../../services/auth.service";
+import { MdDeleteForever } from "react-icons/md";
 
 const Moods = () => {
   const [moods, setMoods] = useState([]);
@@ -49,6 +50,9 @@ const Moods = () => {
           <div className="mood__title">{mood.title}</div>
           <div className="mood__content">{mood.content}</div>
           <div className="mood__email">{mood.email?.fullname ?? "N/A"}</div>
+          <div className="mood__delete">
+            <MdDeleteForever />
+          </div>
         </div>
       ))}
     </div>

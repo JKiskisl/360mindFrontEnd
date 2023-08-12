@@ -6,8 +6,7 @@ Web for UAB 360 mind.
 
 to fix:
 
-Contactus
-2.Mail input correct font+color
+CONTACT US CHECK!!!!!
 
 TODO:
 

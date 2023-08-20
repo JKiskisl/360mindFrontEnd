@@ -85,3 +85,76 @@ export const addMood = async (accessToken, mood) => {
     error: null,
   };
 };
+//NOT TESTED!
+//NOT TESTED YET
+//update mood
+//NOT TESTED YET!
+
+export const updateMood = async (accessToken, moodId, mood) => {
+  const config = {
+    url: `${apiServerUrl}/posts/${moodId}`,
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      title: mood.title,
+      content: mood.content,
+    }),
+  };
+
+  const response = await fetch(`${apiServerUrl}/posts/${moodId}`, config);
+  const data = await response.json();
+
+  if (!response.ok) {
+    return { data: null, error: data.message };
+  }
+
+  const updatedMood = {
+    id: data.id,
+    title: data.title,
+    content: data.content,
+  };
+
+  return {
+    data: updatedMood,
+    error: null,
+  };
+};
+
+//NOT TESTED YET!
+
+//getMoodByID
+//NOT TESTED
+
+export const getMoodByID = async (accessToken, moodId) => {
+  const config = {
+    url: `${apiServerUrl}/posts/${moodId}`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = await callExternalApi({ config });
+  if (error) {
+    return { data: null, error };
+  }
+  if (!data || !Array.isArray(data.data)) {
+    return { data: null, error: "Data is not an array" };
+  }
+  const moods = data.data.map((mood) => ({
+    id: mood.id,
+    title: mood.title,
+    content: mood.content,
+  }));
+
+  return {
+    data: moods,
+    error,
+  };
+};
+
+//NOT TESTED!

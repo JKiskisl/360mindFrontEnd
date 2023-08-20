@@ -16,3 +16,9 @@ Moods page ->
 3.TEST
 
 CHECK refreshToken in the backend
+
+test:
+
+getmoodbyID
+
+updateMOOD

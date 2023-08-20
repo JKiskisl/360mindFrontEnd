@@ -58,3 +58,30 @@ export const deleteMoods = async (accessToken, moodId) => {
 
   return { data: data.message, error };
 };
+
+//add mood
+export const addMood = async (accessToken, mood) => {
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      title: mood.title,
+      content: mood.content,
+    }),
+  };
+
+  const response = await fetch(`${apiServerUrl}/posts`, config);
+  const data = await response.json();
+
+  if (!response.ok) {
+    return { data: null, error: data.message };
+  }
+
+  return {
+    data: { id: data.id, title: data.title, content: data.content },
+    error: null,
+  };
+};

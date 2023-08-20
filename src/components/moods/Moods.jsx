@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./moods.css";
-import { deleteMoods, getMoods } from "../../services/moods.service";
+import { addMood, deleteMoods, getMoods } from "../../services/moods.service";
 import { getTokenFromLocalStorage } from "../../services/auth.service";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -58,14 +58,41 @@ const Moods = () => {
     }
   };
 
+  const handleAddMood = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const title = event.target.title.value;
+    const content = event.target.content.value;
+
+    try {
+      const accessToken = await getTokenFromLocalStorage();
+      const response = await addMood(accessToken, { title, content });
+
+      if (response.error === null) {
+        // Add the newly added mood to the state
+        const newMood = {
+          id: response.data.id,
+          title: response.data.title,
+          content: response.data.content,
+        };
+
+        setMoods((prevMoods) => [...prevMoods, newMood]);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(response.error);
+      }
+    } catch (error) {
+      setErrorMessage(JSON.stringify(error.message, null, 2));
+    }
+  };
+
   return (
     <div className="moods">
       <h2>Moods</h2>
 
-      <form className="mood-form">
-        <input type="text" placeholder="Title" />
-        <textarea placeholder="Content"></textarea>
-        <input type="text" placeholder="Your Full Name" />
+      <form onSubmit={handleAddMood} className="mood-form">
+        <input type="text" name="title" placeholder="Title" />
+        <textarea name="content" placeholder="Content"></textarea>
         <button type="submit">Add Mood</button>
       </form>
       {moods.map((mood) => (

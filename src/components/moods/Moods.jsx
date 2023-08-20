@@ -61,6 +61,13 @@ const Moods = () => {
   return (
     <div className="moods">
       <h2>Moods</h2>
+
+      <form className="mood-form">
+        <input type="text" placeholder="Title" />
+        <textarea placeholder="Content"></textarea>
+        <input type="text" placeholder="Your Full Name" />
+        <button type="submit">Add Mood</button>
+      </form>
       {moods.map((mood) => (
         <div key={mood.id} className="mood">
           <div className="mood__id">{mood.id}</div>

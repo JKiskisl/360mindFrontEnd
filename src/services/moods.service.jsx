@@ -33,3 +33,28 @@ export const getMoods = async (accessToken) => {
     error,
   };
 };
+
+//delete mood
+
+export const deleteMoods = async (accessToken, moodId) => {
+  const config = {
+    url: `${apiServerUrl}/posts/${moodId}`,
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = await callExternalApi({ config });
+
+  if (error) {
+    return { data: null, error };
+  }
+
+  if (!data || !data.message) {
+    return { data: null, error: "Invalid response from the server" };
+  }
+
+  return { data: data.message, error };
+};

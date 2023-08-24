@@ -4,9 +4,16 @@ import { addMood, deleteMoods, getMoods } from "../../services/moods.service";
 import { getTokenFromLocalStorage } from "../../services/auth.service";
 import { MdDeleteForever } from "react-icons/md";
 
+import DatePicker from "react-datepicker";
+import "./datepickers.css";
+
 const Moods = () => {
   const [moods, setMoods] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+  const customDayOrder = [0, 1, 2, 3, 4, 5, 6];
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -89,12 +96,69 @@ const Moods = () => {
   return (
     <div className="moods">
       <h2>Moods</h2>
+      <button onClick={() => setShowForm(true)}>Add Mood</button>
+      {showForm && (
+        <>
+          <div className="overlay"></div>
+          <div className="popup">
+            <form onSubmit={handleAddMood} className="mood-form">
+              <input type="text" name="title" placeholder="Title" />
+              <textarea name="content" placeholder="Content"></textarea>
+              <DatePicker
+                selected={selectedDate}
+                name="date"
+                placeholderText="Select a date"
+                dateFormat="MM/dd/yyyy"
+                dayClassName={() => "react-datepicker__day"}
+                calendarClassName="react-datepicker-popper"
+                customDayOrder={customDayOrder} // Pass the custom day order here
+                onChange={(date) => setSelectedDate(date)}
+              />
 
-      <form onSubmit={handleAddMood} className="mood-form">
-        <input type="text" name="title" placeholder="Title" />
-        <textarea name="content" placeholder="Content"></textarea>
-        <button type="submit">Add Mood</button>
-      </form>
+              <textarea
+                name="happyThings"
+                placeholder="Things that made me happy today"
+              ></textarea>
+              <select name="waterIntake">
+                <option value="0">0 drops</option>
+                <option value="1">1 drop</option>
+                <option value="2">2 drops</option>
+                <option value="3">3 drops</option>
+                <option value="4">4 drops</option>
+                <option value="5">5 drops</option>
+              </select>
+              <input
+                type="number"
+                name="todaysMood"
+                min="1"
+                max="10"
+                placeholder="Today's Mood (1-10)"
+              />
+              <textarea
+                name="selfCare"
+                placeholder="Self-care activities"
+              ></textarea>
+              <textarea name="breakfast" placeholder="Breakfast"></textarea>
+              <textarea name="lunch" placeholder="Lunch"></textarea>
+              <textarea name="dinner" placeholder="Dinner"></textarea>
+              <textarea name="snacks" placeholder="Snacks"></textarea>
+              <textarea
+                name="anxiousThings"
+                placeholder="Things that made me anxious today"
+              ></textarea>
+              <textarea
+                name="sadThings"
+                placeholder="Things that made me sad today"
+              ></textarea>
+            </form>
+            <div className="popup-buttons">
+              <button type="submit">Add mood</button>
+              <button onClick={() => setShowForm(false)}>Cancel</button>
+            </div>
+          </div>
+        </>
+      )}
+
       {moods.map((mood) => (
         <div key={mood.id} className="mood">
           <div className="mood__id">{mood.id}</div>

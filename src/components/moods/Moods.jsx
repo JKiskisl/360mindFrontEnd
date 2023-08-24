@@ -3,6 +3,7 @@ import "./moods.css";
 import { addMood, deleteMoods, getMoods } from "../../services/moods.service";
 import { getTokenFromLocalStorage } from "../../services/auth.service";
 import { MdDeleteForever } from "react-icons/md";
+import { AiOutlineEdit } from "react-icons/ai";
 
 import DatePicker from "react-datepicker";
 import "./datepickers.css";
@@ -12,7 +13,6 @@ const Moods = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const customDayOrder = [0, 1, 2, 3, 4, 5, 6];
   const [selectedDate, setSelectedDate] = useState(null);
-
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,6 @@ const Moods = () => {
       isMounted = false;
     };
   }, []);
-
   const handleDeleteMood = async (moodId) => {
     try {
       const accessToken = await getTokenFromLocalStorage();
@@ -57,6 +56,7 @@ const Moods = () => {
         setMoods((prevMoods) => prevMoods.filter((mood) => mood.id !== moodId));
         console.log(response.data);
         setErrorMessage("");
+        this.forceUpdate();
       } else {
         setErrorMessage(response.error);
       }
@@ -96,7 +96,9 @@ const Moods = () => {
   return (
     <div className="moods">
       <h2>Moods</h2>
-      <button onClick={() => setShowForm(true)}>Add Mood</button>
+      <button className="add-mood-button" onClick={() => setShowForm(true)}>
+        Add Mood
+      </button>
       {showForm && (
         <>
           <div className="overlay"></div>
@@ -161,12 +163,14 @@ const Moods = () => {
 
       {moods.map((mood) => (
         <div key={mood.id} className="mood">
-          <div className="mood__id">{mood.id}</div>
           <div className="mood__title">{mood.title}</div>
           <div className="mood__content">{mood.content}</div>
-          <div className="mood__email">{mood.email?.fullname ?? "N/A"}</div>
           <div className="mood__delete">
             <MdDeleteForever onClick={() => handleDeleteMood(mood.id)} />
+          </div>
+          <div className="mood__edit">
+            <AiOutlineEdit />
+            {/*onclick HANDLEADDMOOD(MOOD.ID)*/}
           </div>
         </div>
       ))}

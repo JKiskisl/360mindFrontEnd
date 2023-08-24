@@ -1,5 +1,4 @@
 /* moods.css */
-
 .moods {
   display: flex;
   flex-direction: column;
@@ -9,17 +8,15 @@
 
 h2 {
   font-size: 1.5rem;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   margin-top: 25px;
 }
 
 .mood {
   display: flex;
-  flex-direction: row; /* Change flex direction to row */
   border: 1px solid var(--color-primary);
   padding: 10px;
-  align-items: center;
-  margin: 10px 800px 15px 0;
+  margin: 10px;
   background-color: var(--color-bg);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -27,36 +24,57 @@ h2 {
   max-width: 400px;
 }
 
-.mood__id {
-  font-weight: bold;
-  margin-right: auto; /* Push the following elements to the right */
-  margin-bottom: 5px;
+.mood__content {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .mood__title {
   font-size: 1.1rem;
-  margin-top: 5px;
   color: var(--color-primary);
-}
-
-.mood__content {
-  margin-top: 5px;
-  color: var(--color-white);
 }
 
 .mood__email {
-  margin-top: 5px;
   font-style: italic;
   color: var(--color-white);
+  margin-top: 5px;
 }
 
 .mood__delete {
-  color: var(--color-primary);
+  background-color: #dc3545; /* Red background color */
+  color: #fff; /* White text color */
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 5px;
 }
 
-/* Existing styles */
+.mood__delete svg {
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
 
+.mood__edit {
+  background-color: #038303;
+  color: #fff; /* White text color */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.mood__edit svg {
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
 .mood-form {
   display: flex;
   flex-direction: column;
@@ -102,7 +120,7 @@ h2 {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  z-index: 999; /* Ensure the pop-up appears above other content */
+  z-index: 999;
   width: 100%;
   max-width: 400px;
 }
@@ -131,4 +149,22 @@ h2 {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
+}
+
+.add-mood-button {
+  background: var(--color-bg-variant);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px; /* Adjust padding for size */
+  cursor: pointer;
+  margin-top: 20px; /* Adjust top margin to move the button down */
+  margin-right: -1600px; /* Adjust right margin to move the button right */
+}
+
+.add-mood-button:hover {
+  background: transparent;
+  border-color: var(--color-primary-variant);
+  cursor: default;
 }

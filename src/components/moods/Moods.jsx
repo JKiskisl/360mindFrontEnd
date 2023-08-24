@@ -56,7 +56,6 @@ const Moods = () => {
         setMoods((prevMoods) => prevMoods.filter((mood) => mood.id !== moodId));
         console.log(response.data);
         setErrorMessage("");
-        this.forceUpdate();
       } else {
         setErrorMessage(response.error);
       }

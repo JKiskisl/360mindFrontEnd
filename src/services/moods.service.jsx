@@ -26,6 +26,16 @@ export const getMoods = async (accessToken) => {
     id: mood.id,
     title: mood.title,
     content: mood.content,
+    date: mood.date,
+    happythings: mood.happythings,
+    waterintake: mood.waterintake,
+    todaysmood: mood.todaysmood,
+    selfcareActivities: mood.selfcareActivities,
+    Breakfast: mood.Breakfast,
+    Dinner: mood.Dinner,
+    Snacks: mood.Snacks,
+    Anxious: mood.Anxious,
+    Sad: mood.Sad,
   }));
 
   return {
@@ -70,6 +80,17 @@ export const addMood = async (accessToken, mood) => {
     body: JSON.stringify({
       title: mood.title,
       content: mood.content,
+      date: mood.date,
+      happythings: mood.happythings,
+      waterintake: mood.waterintake,
+      todaysmood: mood.todaysmood,
+      selfcareActivities: mood.selfcareActivities,
+      Breakfast: mood.Breakfast,
+      Lunch: mood.Lunch,
+      Dinner: mood.Dinner,
+      Snacks: mood.Snacks,
+      Anxious: mood.Anxious,
+      Sad: mood.Sad,
     }),
   };
 
@@ -81,7 +102,22 @@ export const addMood = async (accessToken, mood) => {
   }
 
   return {
-    data: { id: data.id, title: data.title, content: data.content },
+    data: {
+      id: data.id,
+      title: data.title,
+      content: data.content,
+      date: data.date,
+      happythings: data.happythings,
+      waterintake: data.waterintake,
+      todaysmood: data.todaysmood,
+      selfcareActivities: data.selfcareActivities,
+      Breakfast: data.Breakfast,
+      Lunch: data.Lunch,
+      Dinner: data.Dinner,
+      Snacks: data.Snacks,
+      Anxious: data.Anxious,
+      Sad: data.Sad,
+    },
     error: null,
   };
 };

@@ -70,9 +70,35 @@ const Moods = () => {
     const title = event.target.title.value;
     const content = event.target.content.value;
 
+    const date = event.target.date.value;
+    const happythings = event.target.happythings.value;
+    const waterintake = event.target.waterintake.value;
+    const todaysmood = event.target.todaysmood.value;
+    const selfcareActivities = event.target.selfcareActivities.value;
+    const Breakfast = event.target.Breakfast.value;
+    const Lunch = event.target.Lunch.value;
+    const Dinner = event.target.Dinner.value;
+    const Snacks = event.target.Snacks.value;
+    const Anxious = event.target.Anxious.value;
+    const Sad = event.target.Sad.value;
+
     try {
       const accessToken = await getTokenFromLocalStorage();
-      const response = await addMood(accessToken, { title, content });
+      const response = await addMood(accessToken, {
+        title,
+        content,
+        date,
+        happythings,
+        waterintake,
+        todaysmood,
+        selfcareActivities,
+        Breakfast,
+        Lunch,
+        Dinner,
+        Snacks,
+        Anxious,
+        Sad,
+      });
 
       if (response.error === null) {
         // Add the newly added mood to the state
@@ -80,6 +106,17 @@ const Moods = () => {
           id: response.data.id,
           title: response.data.title,
           content: response.data.content,
+          date: response.data.date,
+          happythings: response.data.happythings,
+          waterintake: response.data.waterintake,
+          todaysmood: response.data.todaysmood,
+          selfcareActivities: response.data.selfcareActivities,
+          Breakfast: response.data.Breakfast,
+          Lunch: response.data.Lunch,
+          Dinner: response.data.Dinner,
+          Snacks: response.data.Snacks,
+          Anxious: response.data.Anxious,
+          Sad: response.data.Sad,
         };
 
         setMoods((prevMoods) => [...prevMoods, newMood]);
@@ -117,10 +154,10 @@ const Moods = () => {
               />
 
               <textarea
-                name="happyThings"
+                name="happythings"
                 placeholder="Things that made me happy today"
               ></textarea>
-              <select name="waterIntake">
+              <select name="waterintake">
                 <option value="0">0 drops</option>
                 <option value="1">1 drop</option>
                 <option value="2">2 drops</option>
@@ -130,32 +167,32 @@ const Moods = () => {
               </select>
               <input
                 type="number"
-                name="todaysMood"
+                name="todaysmood"
                 min="1"
                 max="10"
                 placeholder="Today's Mood (1-10)"
               />
               <textarea
-                name="selfCare"
+                name="selfcareActivities"
                 placeholder="Self-care activities"
               ></textarea>
-              <textarea name="breakfast" placeholder="Breakfast"></textarea>
-              <textarea name="lunch" placeholder="Lunch"></textarea>
-              <textarea name="dinner" placeholder="Dinner"></textarea>
-              <textarea name="snacks" placeholder="Snacks"></textarea>
+              <textarea name="Breakfast" placeholder="Breakfast"></textarea>
+              <textarea name="Lunch" placeholder="Lunch"></textarea>
+              <textarea name="Dinner" placeholder="Dinner"></textarea>
+              <textarea name="Snacks" placeholder="Snacks"></textarea>
               <textarea
-                name="anxiousThings"
+                name="Anxious"
                 placeholder="Things that made me anxious today"
               ></textarea>
               <textarea
-                name="sadThings"
+                name="Sad"
                 placeholder="Things that made me sad today"
               ></textarea>
+              <div className="popup-buttons">
+                <button type="submit">Add mood</button>
+                <button onClick={() => setShowForm(false)}>Cancel</button>
+              </div>
             </form>
-            <div className="popup-buttons">
-              <button type="submit">Add mood</button>
-              <button onClick={() => setShowForm(false)}>Cancel</button>
-            </div>
           </div>
         </>
       )}
@@ -164,6 +201,7 @@ const Moods = () => {
         <div key={mood.id} className="mood">
           <div className="mood__title">{mood.title}</div>
           <div className="mood__content">{mood.content}</div>
+          <div>{mood.date}</div>
           <div className="mood__delete">
             <MdDeleteForever onClick={() => handleDeleteMood(mood.id)} />
           </div>

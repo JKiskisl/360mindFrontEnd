@@ -157,10 +157,10 @@ h2 {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 10px 20px; /* Adjust padding for size */
+  padding: 10px 20px;
   cursor: pointer;
-  margin-top: 20px; /* Adjust top margin to move the button down */
-  margin-right: -1600px; /* Adjust right margin to move the button right */
+  margin-top: 20px;
+  margin-right: -1600px;
 }
 
 .add-mood-button:hover {
@@ -207,7 +207,7 @@ h2 {
 }
 
 .delete-button {
-  background-color: #dc3545; /* Red background color */
+  background-color: #dc3545;
   color: white;
   border: none;
   border-radius: 5px;
@@ -217,5 +217,5 @@ h2 {
 }
 
 .delete-button:hover {
-  background-color: #c82333; /* Darker red on hover */
+  background-color: #c82333;
 }

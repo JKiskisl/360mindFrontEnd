@@ -122,10 +122,6 @@ export const addMood = async (accessToken, mood) => {
     error: null,
   };
 };
-//NOT TESTED!
-//NOT TESTED YET
-//update mood
-//NOT TESTED YET!
 
 export const updateMood = async (accessToken, moodId, mood) => {
   const config = {
@@ -181,8 +177,6 @@ export const updateMood = async (accessToken, moodId, mood) => {
     error: null,
   };
 };
-
-//NOT TESTED YET!
 
 //getMoodByID
 //NOT TESTED

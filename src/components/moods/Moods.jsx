@@ -133,7 +133,6 @@ const Moods = () => {
         setMoods((prevMoods) => prevMoods.filter((mood) => mood.id !== moodId));
         console.log(response.data);
         setErrorMessage("");
-        setShowForm(false);
       } else {
         setErrorMessage(response.error);
       }

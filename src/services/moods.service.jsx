@@ -32,6 +32,7 @@ export const getMoods = async (accessToken) => {
     todaysmood: mood.todaysmood,
     selfcareActivities: mood.selfcareActivities,
     Breakfast: mood.Breakfast,
+    Lunch: mood.Lunch,
     Dinner: mood.Dinner,
     Snacks: mood.Snacks,
     Anxious: mood.Anxious,
@@ -137,6 +138,17 @@ export const updateMood = async (accessToken, moodId, mood) => {
     body: JSON.stringify({
       title: mood.title,
       content: mood.content,
+      date: mood.date,
+      happythings: mood.happythings,
+      waterintake: mood.waterintake,
+      todaysmood: mood.todaysmood,
+      selfcareActivities: mood.selfcareActivities,
+      Breakfast: mood.Breakfast,
+      Lunch: mood.Lunch,
+      Dinner: mood.Dinner,
+      Snacks: mood.Snacks,
+      Anxious: mood.Anxious,
+      Sad: mood.Sad,
     }),
   };
 
@@ -151,6 +163,17 @@ export const updateMood = async (accessToken, moodId, mood) => {
     id: data.id,
     title: data.title,
     content: data.content,
+    date: data.date,
+    happythings: data.happythings,
+    waterintake: data.waterintake,
+    todaysmood: data.todaysmood,
+    selfcareActivities: data.selfcareActivities,
+    Breakfast: data.Breakfast,
+    Lunch: data.Lunch,
+    Dinner: data.Dinner,
+    Snacks: data.Snacks,
+    Anxious: data.Anxious,
+    Sad: data.Sad,
   };
 
   return {

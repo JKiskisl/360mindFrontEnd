@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
+
 import "./moods.css";
-import { addMood, deleteMoods, getMoods } from "../../services/moods.service";
+import {
+  addMood,
+  deleteMoods,
+  getMoods,
+  updateMood,
+} from "../../services/moods.service";
 import { getTokenFromLocalStorage } from "../../services/auth.service";
 
 import DatePicker from "react-datepicker";
@@ -9,9 +16,81 @@ import "./datepickers.css";
 const Moods = () => {
   const [moods, setMoods] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const customDayOrder = [0, 1, 2, 3, 4, 5, 6];
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [showForm, setShowForm] = useState(false);
+
+  const [editMood, setEditMood] = useState(null);
+  const [editFormValue, setEditFormValue] = useState({});
+
+  const handleEditMood = (mood) => {
+    setEditMood(mood);
+    setEditFormValue({
+      title: mood.title,
+      content: mood.content,
+      date: mood.date,
+      happythings: mood.happythings,
+      waterintake: mood.waterintake,
+      todaysmood: mood.todaysmood,
+      selfcareActivities: mood.selfcareActivities,
+      Breakfast: mood.Breakfast,
+      Lunch: mood.Lunch,
+      Dinner: mood.Dinner,
+      Snacks: mood.Snacks,
+      Anxious: mood.Anxious,
+      Sad: mood.Sad,
+    });
+    setShowForm(true);
+  };
+
+  const handleUpdateMood = async (event) => {
+    event.preventDefault();
+
+    const updatedMoodData = {
+      title: editFormValue.title,
+      content: editFormValue.content,
+      date: editFormValue.date,
+      happythings: editFormValue.happythings,
+      waterintake: editFormValue.waterintake,
+      todaysmood: editFormValue.todaysmood,
+      selfcareActivities: editFormValue.selfcareActivities,
+      Breakfast: editFormValue.Breakfast,
+      Lunch: editFormValue.Lunch,
+      Dinner: editFormValue.Dinner,
+      Snacks: editFormValue.Snacks,
+      Anxious: editFormValue.Anxious,
+      Sad: editFormValue.Sad,
+    };
+
+    try {
+      const accessToken = await getTokenFromLocalStorage();
+      const response = await updateMood(
+        accessToken,
+        editMood.id,
+        updatedMoodData
+      );
+
+      if (response.error === null) {
+        const updatedMood = {
+          ...editMood,
+          ...updatedMoodData,
+        };
+        setMoods((prevMoods) =>
+          prevMoods.map((mood) =>
+            mood.id === editMood.id ? updatedMood : mood
+          )
+        );
+        setEditMood(null);
+        setEditFormValue({});
+        setErrorMessage("");
+        setShowForm(false);
+      } else {
+        setErrorMessage(response.error);
+      }
+    } catch (error) {
+      setErrorMessage(JSON.stringify(error.message, null, 2));
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -54,6 +133,7 @@ const Moods = () => {
         setMoods((prevMoods) => prevMoods.filter((mood) => mood.id !== moodId));
         console.log(response.data);
         setErrorMessage("");
+        setShowForm(false);
       } else {
         setErrorMessage(response.error);
       }
@@ -140,8 +220,29 @@ const Moods = () => {
           <div className="overlay"></div>
           <div className="popup">
             <form onSubmit={handleAddMood} className="mood-form">
-              <input type="text" name="title" placeholder="Title" />
-              <textarea name="content" placeholder="Content"></textarea>
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={editFormValue.title || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    title: event.target.value,
+                  })
+                }
+              />
+              <textarea
+                name="content"
+                placeholder="Content"
+                value={editFormValue.content || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    content: event.target.value,
+                  })
+                }
+              ></textarea>
               <DatePicker
                 selected={selectedDate}
                 name="date"
@@ -149,47 +250,146 @@ const Moods = () => {
                 dateFormat="MM/dd/yyyy"
                 dayClassName={() => "react-datepicker__day"}
                 calendarClassName="react-datepicker-popper"
-                customDayOrder={customDayOrder} // Pass the custom day order here
-                onChange={(date) => setSelectedDate(date)}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                  const formattedDate = format(date, "MM/dd/yyyy");
+                  setEditFormValue({
+                    ...editFormValue,
+                    date: formattedDate,
+                  });
+                }}
               />
-
               <textarea
                 name="happythings"
                 placeholder="Things that made me happy today"
+                value={editFormValue.happythings || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    happythings: event.target.value,
+                  })
+                }
               ></textarea>
-              <select name="waterintake">
-                <option value="0">0 drops</option>
-                <option value="1">1 drop</option>
-                <option value="2">2 drops</option>
-                <option value="3">3 drops</option>
-                <option value="4">4 drops</option>
-                <option value="5">5 drops</option>
-              </select>
+              <input
+                type="number"
+                name="waterintake"
+                min="0"
+                max="10"
+                placeholder="Today's water intake (litres)"
+                value={editFormValue.waterintake || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    waterintake: event.target.value,
+                  })
+                }
+              />
               <input
                 type="number"
                 name="todaysmood"
                 min="1"
                 max="10"
                 placeholder="Today's Mood (1-10)"
+                value={editFormValue.todaysmood || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    todaysmood: event.target.value,
+                  })
+                }
               />
               <textarea
                 name="selfcareActivities"
                 placeholder="Self-care activities"
+                value={editFormValue.selfcareActivities || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    selfcareActivities: event.target.value,
+                  })
+                }
               ></textarea>
-              <textarea name="Breakfast" placeholder="Breakfast"></textarea>
-              <textarea name="Lunch" placeholder="Lunch"></textarea>
-              <textarea name="Dinner" placeholder="Dinner"></textarea>
-              <textarea name="Snacks" placeholder="Snacks"></textarea>
+              <textarea
+                name="Breakfast"
+                placeholder="Breakfast"
+                value={editFormValue.Breakfast || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    Breakfast: event.target.value,
+                  })
+                }
+              ></textarea>
+              <textarea
+                name="Lunch"
+                placeholder="Lunch"
+                value={editFormValue.Lunch || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    Lunch: event.target.value,
+                  })
+                }
+              ></textarea>
+              <textarea
+                name="Dinner"
+                placeholder="Dinner"
+                value={editFormValue.Dinner || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    Dinner: event.target.value,
+                  })
+                }
+              ></textarea>
+              <textarea
+                name="Snacks"
+                placeholder="Snacks"
+                value={editFormValue.Snacks || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    Snacks: event.target.value,
+                  })
+                }
+              ></textarea>
               <textarea
                 name="Anxious"
                 placeholder="Things that made me anxious today"
+                value={editFormValue.Anxious || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    Anxious: event.target.value,
+                  })
+                }
               ></textarea>
               <textarea
                 name="Sad"
                 placeholder="Things that made me sad today"
+                value={editFormValue.Sad || ""}
+                onChange={(event) =>
+                  setEditFormValue({
+                    ...editFormValue,
+                    Sad: event.target.value,
+                  })
+                }
               ></textarea>
               <div className="popup-buttons">
                 <button type="submit">Add mood</button>
+                {editMood && (
+                  <>
+                    <button type="button" onClick={handleUpdateMood}>
+                      Update
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteMood(editMood.id)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
                 <button onClick={() => setShowForm(false)}>Cancel</button>
               </div>
             </form>
@@ -215,7 +415,12 @@ const Moods = () => {
               <td>{mood.todaysmood}</td>
               <td>{mood.waterintake}</td>
               <td>
-                <button className="edit-button">Edit</button>
+                <button
+                  className="edit-button"
+                  onClick={() => handleEditMood(mood)}
+                >
+                  Edit
+                </button>
                 <button
                   className="delete-button"
                   onClick={() => handleDeleteMood(mood.id)}

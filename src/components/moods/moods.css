@@ -168,3 +168,54 @@ h2 {
   border-color: var(--color-primary-variant);
   cursor: default;
 }
+
+.mood-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.mood-table th,
+.mood-table td {
+  border: 1px solid var(--color-primary);
+  padding: 8px;
+  text-align: center;
+}
+
+.mood-table th {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.mood-table td:nth-child(3),
+.mood-table td:nth-child(4) {
+  width: 10%;
+}
+
+.edit-button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.edit-button:hover {
+  background-color: #c46309;
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red background color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}

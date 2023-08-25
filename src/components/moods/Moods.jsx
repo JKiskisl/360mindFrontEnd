@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./moods.css";
 import { addMood, deleteMoods, getMoods } from "../../services/moods.service";
 import { getTokenFromLocalStorage } from "../../services/auth.service";
-import { MdDeleteForever } from "react-icons/md";
-import { AiOutlineEdit } from "react-icons/ai";
 
 import DatePicker from "react-datepicker";
 import "./datepickers.css";
@@ -121,6 +119,8 @@ const Moods = () => {
 
         setMoods((prevMoods) => [...prevMoods, newMood]);
         setErrorMessage("");
+        setShowForm(false);
+        console.log("popup closed");
       } else {
         setErrorMessage(response.error);
       }
@@ -197,20 +197,36 @@ const Moods = () => {
         </>
       )}
 
-      {moods.map((mood) => (
-        <div key={mood.id} className="mood">
-          <div className="mood__title">{mood.title}</div>
-          <div className="mood__content">{mood.content}</div>
-          <div>{mood.date}</div>
-          <div className="mood__delete">
-            <MdDeleteForever onClick={() => handleDeleteMood(mood.id)} />
-          </div>
-          <div className="mood__edit">
-            <AiOutlineEdit />
-            {/*onclick HANDLEADDMOOD(MOOD.ID)*/}
-          </div>
-        </div>
-      ))}
+      <table className="mood-table">
+        <thead>
+          <tr>
+            <th>Mood Title</th>
+            <th>Date</th>
+            <th>Mood Rating</th>
+            <th>Water Intake</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {moods.map((mood) => (
+            <tr key={mood.id}>
+              <td>{mood.title}</td>
+              <td>{mood.date}</td>
+              <td>{mood.todaysmood}</td>
+              <td>{mood.waterintake}</td>
+              <td>
+                <button className="edit-button">Edit</button>
+                <button
+                  className="delete-button"
+                  onClick={() => handleDeleteMood(mood.id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

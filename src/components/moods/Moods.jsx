@@ -208,10 +208,15 @@ const Moods = () => {
     }
   };
 
+  const showPopUpClear = () => {
+    setEditFormValue({});
+    setShowForm(true);
+  };
+
   return (
     <div className="moods">
       <h2>Moods</h2>
-      <button className="add-mood-button" onClick={() => setShowForm(true)}>
+      <button className="add-mood-button" onClick={() => showPopUpClear()}>
         Add Mood
       </button>
       {showForm && (

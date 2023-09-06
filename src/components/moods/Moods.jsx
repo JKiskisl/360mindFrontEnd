@@ -16,6 +16,8 @@ import { getTokenFromLocalStorage } from "../../services/auth.service";
 const Moods = () => {
   const [moods, setMoods] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [newMoodAdded, setNewMoodAdded] = useState(false);
+  const [newMood, setNewMood] = useState(null);
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -111,6 +113,9 @@ const Moods = () => {
           setMoods(response.data);
           console.log(response.data);
           setErrorMessage("");
+          if (newMoodAdded) {
+            setNewMoodAdded(false);
+          }
         } else {
           setErrorMessage(response.message);
         }
@@ -124,15 +129,16 @@ const Moods = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [newMoodAdded]);
+
   const handleDeleteMood = async (moodId) => {
     try {
       const accessToken = await getTokenFromLocalStorage();
       const response = await deleteMoods(accessToken, moodId);
 
       if (response.error === null) {
+        // Update the state to remove the deleted mood
         setMoods((prevMoods) => prevMoods.filter((mood) => mood.id !== moodId));
-        console.log(response.data);
         setErrorMessage("");
       } else {
         setErrorMessage(response.error);
@@ -200,6 +206,8 @@ const Moods = () => {
         setMoods((prevMoods) => [...prevMoods, newMood]);
         setErrorMessage("");
         setShowForm(false);
+        setNewMoodAdded(true);
+        console.log("Deleted Mood Set to True");
         console.log("popup closed");
       } else {
         setErrorMessage(response.error);
@@ -212,6 +220,7 @@ const Moods = () => {
   const showPopUpClear = () => {
     setEditFormValue({});
     setSelectedDate(null);
+    setEditMood(null);
     setShowForm(true);
   };
 
@@ -239,6 +248,7 @@ const Moods = () => {
         moods={moods}
         handleEditMood={handleEditMood}
         handleDeleteMood={handleDeleteMood}
+        newMood={newMood}
       />
     </div>
   );

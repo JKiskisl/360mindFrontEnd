@@ -2,7 +2,7 @@
 import React from "react";
 import MoodTableRow from "./MoodTableRow";
 
-const MoodTable = ({ moods, handleEditMood, handleDeleteMood }) => {
+const MoodTable = ({ moods, handleEditMood, handleDeleteMood, newMood }) => {
   return (
     <table className="mood-table">
       <thead>
@@ -23,6 +23,14 @@ const MoodTable = ({ moods, handleEditMood, handleDeleteMood }) => {
             handleDeleteMood={handleDeleteMood}
           />
         ))}
+        {newMood && (
+          <MoodTableRow
+            key={newMood.id}
+            mood={newMood}
+            handleEditMood={handleEditMood}
+            handleDeleteMood={handleDeleteMood}
+          />
+        )}
       </tbody>
     </table>
   );

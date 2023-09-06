@@ -211,6 +211,7 @@ const Moods = () => {
 
   const showPopUpClear = () => {
     setEditFormValue({});
+    setSelectedDate(null);
     setShowForm(true);
   };
 
